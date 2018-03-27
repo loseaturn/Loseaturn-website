@@ -1,0 +1,70 @@
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+
+
+# compress text, html, javascript, css, xml:
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+
+# Or, compress certain file types by extension:
+<files *.php>
+SetOutputFilter DEFLATE
+</files>
+
+AddType image/svg+xml .svg
+AddOutputFilterByType DEFLATE image/svg+xml
+
+# 1 Month for most static assets
+<filesMatch ".(css|jpg|jpeg|png|gif|js|ico|ttf|svg)$">
+Header set Cache-Control "max-age=2592000, public"
+</filesMatch>
+
+## EXPIRES CACHING ##
+<IfModule mod_expires.c>
+# Enable expirations
+ExpiresActive On 
+# Default directive
+ExpiresDefault "access plus 2 days"
+# My favicon
+ExpiresByType image/x-icon "access plus 1 year"
+# Images
+ExpiresByType image/gif "access plus 1 month"
+ExpiresByType image/png "access plus 1 month"
+ExpiresByType image/jpg "access plus 1 month"
+ExpiresByType image/jpeg "access plus 1 month"
+ExpiresByType image/jpeg "access plus 1 month"
+# CSS
+ExpiresByType text/css "access plus 2 days"
+# Javascript
+ExpiresByType application/javascript "access plus 2 days
+</IfModule>
+## EXPIRES CACHING ##
+
+
+
+# Cache-Control Headers
+<IfModule mod_headers.c>
+    <FilesMatch "\.(js)$">
+        Header set Cache-Control "max-age=2592000, private"
+    </FilesMatch>
+	<FilesMatch "\.(mp3)$">
+        Header set Cache-Control "max-age=604800, private"
+    </FilesMatch>
+</IfModule>
